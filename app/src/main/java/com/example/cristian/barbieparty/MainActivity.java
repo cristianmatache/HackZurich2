@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             fo.write(bytes.toByteArray());
             fo.close();
 
-            request();
+            new Request().execute();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -177,32 +177,6 @@ public class MainActivity extends AppCompatActivity
 
         //ivImage.setImageBitmap(thumbnail);
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void request() throws Exception {
-        String urlParameters = "param1=a&param2=b&param3=c";
-        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-        int postDataLength = postData.length;
-        String request = "http://www.fashwell.com/api/hackzurich/v1/attributes/";
-        URL url = new URL(request);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setInstanceFollowRedirects(false);
-        conn.setRequestMethod("POST");
-
-        conn.setRequestProperty("Content-Type", "application/json");
-        //conn.setRequestProperty( "charset", "utf-8");
-        conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-
-        conn.setRequestProperty("Authorization", "Token 782aba3ce358d61a86e11b61da6433a8f04e1d7a");
-        //conn.setRequestProperty("image", filePaths.get(0));
-        conn.setRequestProperty("url", "https://img.michaels.com/L6/3/IOGLO/873480063/212543238/10093626_r.jpg?fit=inside|1024:1024");
-        conn.setUseCaches(false);
-        try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-            wr.write(postData);
-        }
-    }
-
 
     private class GetUrlContentTask extends AsyncTask<String, Integer, String> {
         protected String doInBackground(String... urls) {
